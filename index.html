@@ -1,0 +1,130 @@
+
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <title>AI命理分析 - 八字测算</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>🔮 AI命理分析</h1>
+        <p class="intro">请输入您的出生信息，获取八字命理分析</p>
+
+        <form id="analysisForm">
+            
+<label for="gender">性别：</label>
+<select id="gender" name="gender" required>
+    <option value="">请选择</option>
+    <option value="男">男</option>
+    <option value="女">女</option>
+</select>
+<label for="birthdate">出生日期（中国农历/阴历）：</label>
+<div class="birthdate-wrapper">
+    <select id="year" name="year" required>
+        <option value="">请选择年份</option>
+    </select> 年
+    <select id="month" name="month" required>
+        <option value="">请选择月份</option>
+    </select> 月
+    <select id="day" name="day" required>
+        <option value="">请选择日期</option>
+    </select> 日
+</div>
+
+
+
+
+
+
+            
+
+            
+
+            <label for="time">出生时辰：</label>
+            <select id="time" name="time" required>
+                <option value="">请选择</option>
+                <option value="子时">子时（23:00–01:00）</option>
+                <option value="丑时">丑时（01:00–03:00）</option>
+                <option value="寅时">寅时（03:00–05:00）</option>
+                <option value="卯时">卯时（05:00–07:00）</option>
+                <option value="辰时">辰时（07:00–09:00）</option>
+                <option value="巳时">巳时（09:00–11:00）</option>
+                <option value="午时">午时（11:00–13:00）</option>
+                <option value="未时">未时（13:00–15:00）</option>
+                <option value="申时">申时（15:00–17:00）</option>
+                <option value="酉时">酉时（17:00–19:00）</option>
+                <option value="戌时">戌时（19:00–21:00）</option>
+                <option value="亥时">亥时（21:00–23:00）</option>
+            </select>
+
+            <button type="submit">🔍 开始分析</button>
+        </form>
+
+        <div id="result">
+            <h2>🎯 分析结果</h2>
+            <p>（这里将显示模拟分析结果……）</p>
+        </div>
+
+        <footer>
+            <p>⚠️ 本服务由AI生成，仅供娱乐参考</p>
+        </footer>
+    </div>
+
+<script>
+    const yearSelect = document.getElementById("year");
+    const monthSelect = document.getElementById("month");
+    const daySelect = document.getElementById("day");
+
+    for (let y = 1920; y <= 2030; y++) {
+        let opt = document.createElement("option");
+        opt.value = y;
+        opt.text = y;
+        yearSelect.appendChild(opt);
+    }
+
+    for (let m = 1; m <= 12; m++) {
+        let opt = document.createElement("option");
+        opt.value = m.toString().padStart(2, '0');
+        opt.text = m;
+        monthSelect.appendChild(opt);
+    }
+
+    for (let d = 1; d <= 31; d++) {
+        let opt = document.createElement("option");
+        opt.value = d.toString().padStart(2, '0');
+        opt.text = d;
+        daySelect.appendChild(opt);
+    }
+</script>
+
+<script>
+    const yearSelect = document.getElementById("year");
+    const monthSelect = document.getElementById("month");
+    const daySelect = document.getElementById("day");
+
+    for (let y = 1920; y <= 2030; y++) {
+        let opt = document.createElement("option");
+        opt.value = y;
+        opt.text = y;
+        yearSelect.appendChild(opt);
+    }
+
+    for (let m = 1; m <= 12; m++) {
+        let opt = document.createElement("option");
+        opt.value = m.toString().padStart(2, '0');
+        opt.text = m;
+        monthSelect.appendChild(opt);
+    }
+
+    for (let d = 1; d <= 31; d++) {
+        let opt = document.createElement("option");
+        opt.value = d.toString().padStart(2, '0');
+        opt.text = d;
+        daySelect.appendChild(opt);
+    }
+</script>
+</body>
+</html>
+
+
