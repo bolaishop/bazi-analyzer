@@ -1,11 +1,14 @@
-const express = require('express');
-const bodyParser = require('body-parser');
-const { Configuration, OpenAIApi } = require('openai');
+import express from 'express';
+import bodyParser from 'body-parser';
+import { Configuration, OpenAIApi } from 'openai';
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 const app = express();
 const port = process.env.PORT || 3000;
 
-// 读取 OpenAI API 密钥
+// 读取 API Key
 const OPENAI_API_KEY = process.env.OPENAI_API_KEY;
 if (!OPENAI_API_KEY) {
   throw new Error('❌ 请在环境变量中配置 OPENAI_API_KEY');
@@ -22,7 +25,7 @@ app.use(bodyParser.json());
 
 // 首页路由
 app.get('/', (req, res) => {
-  res.send('🎉 Welcome to the BaZi Analyzer API! Please POST to /analyze');
+  res.send('🧧 Welcome to the BaZi Analyzer API! Please POST to /analyze');
 });
 
 // 八字分析接口
@@ -31,42 +34,33 @@ app.post('/analyze', async (req, res) => {
 
   if (!birthday || !gender || !time) {
     return res.status(400).json({
-      error: '请提供完整的参数：birthday（格式如1986/5/10）、gender（male或female）、time（格式如07:00）',
+      error: 'Missing required fields: birthday, gender, or time',
     });
   }
 
-  try {
-    const prompt = `
-你是一名精通中国命理学的八字分析大师。请根据以下信息分析八字命盘，内容不少于150字：
+  const prompt = `请根据以下信息进行详细的命理八字分析：
 
-生日：${birthday}
+出生日期：${birthday}
 性别：${gender}
 出生时辰：${time}
 
-请分析整体命格、性格特点、事业方向、健康情况以及未来10年的大致运势。
-`;
+请使用专业术语，并从性格、事业、财运、感情、健康、发展建议等方面详细分析，并使用中文回答。`;
 
+  try {
     const completion = await openai.createChatCompletion({
       model: 'gpt-3.5-turbo',
-      messages: [
-        { role: 'system', content: '你是一位精通八字命理的分析师，请使用通俗易懂的中文回答。' },
-        { role: 'user', content: prompt }
-      ],
-      temperature: 0.7,
+      messages: [{ role: 'user', content: prompt }],
     });
 
     const result = completion.data.choices[0].message.content;
-
-    res.json({
-      input: { birthday, gender, time },
-      analysis: result,
-    });
-  } catch (err) {
-    console.error('分析出错:', err.message);
-    res.status(500).json({ error: '分析失败，请稍后再试。' });
+    res.json({ result });
+  } catch (error) {
+    console.error('OpenAI API error:', error.message);
+    res.status(500).json({ error: 'AI 分析失败，请稍后再试。' });
   }
 });
 
+// 启动服务器
 app.listen(port, () => {
-  console.log(`✅ 服务已启动，端口: ${port}`);
+  console.log(`Server is running on port ${port}`);
 });
